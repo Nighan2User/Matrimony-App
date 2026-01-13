@@ -15,12 +15,12 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: "AIzaSyCfcn_q14Wc-AnYPshuJWHtAEzP_Jxf3Bo",
-    authDomain: "bright-weddings-605e7.firebaseapp.com",
-    projectId: "bright-weddings-605e7",
-    storageBucket: "bright-weddings-605e7.firebasestorage.app",
-    messagingSenderId: "319657689155",
-    appId: "1:319657689155:web:5520ffe43786f325e0d4f6",
-    measurementId: "G-FEK846FS4T",
+    apiKey: "AIzaSyBbfsgurulLiw5EN4AG9tCU0LThryhwuQQ",
+    authDomain: "bright-weddings-27602.firebaseapp.com",
+    projectId: "bright-weddings-27602",
+    storageBucket: "bright-weddings-27602.firebasestorage.app",
+    messagingSenderId: "162028635060",
+    appId: "1:162028635060:web:585482a99ea1f21b4a68e1",
+    measurementId: "G-LC6YKPN1DX",
   );
 }
