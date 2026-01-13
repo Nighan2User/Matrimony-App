@@ -19,9 +19,11 @@ import 'View/Login/auth_wrapper.dart';
 import 'View/Login/login_web_simple.dart';
 import 'View/Login/login_fallback.dart';
 import 'View/Login/login_original_firebase.dart';
+import 'View/Auth/email_verification_screen.dart';
 import 'Controller/auth_controller.dart';
 import 'Controller/edit_profile_controller.dart';
 import 'Controller/profile_controller.dart';
+import 'Controller/firebase_auth_controller.dart';
 import 'Controller/animation_controller.dart' as custom;
 import 'theme/theme_controller.dart';
 
@@ -61,6 +63,7 @@ void main() async {
     Get.put(AuthController());
     Get.put(EditProfileController());
     Get.put(ProfileController());
+    Get.put(FirebaseAuthController()); // Add Firebase auth controller
     Get.put(custom.AnimationController());
     Get.put(ThemeController());
     print("Controllers initialized successfully");
@@ -92,6 +95,7 @@ class MyApp extends StatelessWidget {
                 routes: {
                   '/': (context) => LoginHome(),
                   '/login': (context) => LoginOriginalFirebase(),
+                  '/verify-email': (context) => EmailVerificationScreen(),
                   '/home': (context) => DashboardMob(),
                   '/discover': (context) => DiscoverPage(),
                   '/responsive-login': (context) => ResponsiveLogin(),
