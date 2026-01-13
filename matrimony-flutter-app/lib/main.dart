@@ -20,6 +20,8 @@ import 'View/Login/login_web_simple.dart';
 import 'View/Login/login_fallback.dart';
 import 'View/Login/login_original_firebase.dart';
 import 'View/Auth/email_verification_screen.dart';
+import 'View/Legal/privacy_policy_screen.dart';
+import 'View/Legal/terms_of_service_screen.dart';
 import 'Controller/auth_controller.dart';
 import 'Controller/edit_profile_controller.dart';
 import 'Controller/profile_controller.dart';
@@ -100,6 +102,8 @@ class MyApp extends StatelessWidget {
                   '/discover': (context) => DiscoverPage(),
                   '/responsive-login': (context) => ResponsiveLogin(),
                   '/LoginMobile': (context) => LoginMobile(),
+                  '/privacy-policy': (context) => PrivacyPolicyScreen(),
+                  '/terms-of-service': (context) => TermsOfServiceScreen(),
                 },
                 debugShowCheckedModeBanner: false,
                 builder: EasyLoading.init(),
