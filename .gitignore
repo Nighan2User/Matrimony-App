@@ -1,0 +1,63 @@
+# Flutter/Dart
+.dart_tool/
+.build/
+build/
+*.iml
+.metadata
+.packages
+.pub-cache/
+.pub/
+pubspec.lock
+
+# iOS
+ios/Pods/
+ios/.symlinks/
+ios/Flutter/Flutter.framework
+ios/Flutter/Flutter.podspec
+ios/Flutter/Generated.xcconfig
+ios/Flutter/app.flx
+ios/Flutter/app.zip
+ios/Flutter/flutter_assets/
+ios/Flutter/flutter_export_environment.sh
+ios/ServiceDefinitions.json
+ios/Runner/GeneratedPluginRegistrant.*
+
+# Android
+android/.gradle/
+android/local.properties
+android/app/debug/
+android/app/profile/
+android/app/release/
+**/android/captures/
+**/android/gradlew
+**/android/gradlew.bat
+**/android/local.properties
+**/android/**/GeneratedPluginRegistrant.java
+
+# Node
+node_modules/
+package-lock.json
+
+# macOS
+.DS_Store
+*.swp
+*.swo
+
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# Firebase
+.firebase/
+.firebaserc
+
+# Build outputs
+*.js.map
+*.dill
+*.dill.track.dill
+
+# Generated files
+.flutter-plugins
+.flutter-plugins-dependencies
+.last_build_id
