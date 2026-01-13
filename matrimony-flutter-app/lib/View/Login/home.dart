@@ -74,7 +74,7 @@ class _LoginHomeState extends State<LoginHome>
         width: double.infinity,
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/images/brightWedding.png'),
+            image: AssetImage('assets/images/brightWedding.jpg'),
             fit: BoxFit.fill,
           ),
         ),

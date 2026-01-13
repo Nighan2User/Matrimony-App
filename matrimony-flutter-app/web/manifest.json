@@ -1,13 +1,14 @@
 {
-    "name": "bright_weddings",
-    "short_name": "bright_weddings",
-    "start_url": ".",
+    "name": "Bright Weddings",
+    "short_name": "Bright Weddings",
+    "start_url": "/",
     "display": "standalone",
-    "background_color": "#0175C2",
-    "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "background_color": "#FFF8F9",
+    "theme_color": "#E91E63",
+    "description": "Find your perfect match with Bright Weddings",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
+    "categories": ["lifestyle", "social"],
     "icons": [
         {
             "src": "icons/Icon-192.png",

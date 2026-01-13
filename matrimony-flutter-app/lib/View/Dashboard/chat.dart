@@ -31,7 +31,7 @@ class _ChatPageState extends State<ChatPage> with SingleTickerProviderStateMixin
   final List<Map<String, dynamic>> conversations = [
     {
       "name": "Nandana",
-      "image": "assets/images/profile1.png",
+      "image": "assets/images/profile1.jpg",
       "lastMessage": "That sounds wonderful! Let's plan for the weekend 😊",
       "time": "Just now",
       "unread": 2,
@@ -40,7 +40,7 @@ class _ChatPageState extends State<ChatPage> with SingleTickerProviderStateMixin
     },
     {
       "name": "Priya",
-      "image": "assets/images/profile3.png",
+      "image": "assets/images/profile3.jpg",
       "lastMessage": "I love that book too! Have you read the sequel?",
       "time": "5 mins ago",
       "unread": 0,
@@ -49,7 +49,7 @@ class _ChatPageState extends State<ChatPage> with SingleTickerProviderStateMixin
     },
     {
       "name": "Sneha",
-      "image": "assets/images/profile5.png",
+      "image": "assets/images/profile5.jpg",
       "lastMessage": "The art exhibition was amazing!",
       "time": "30 mins ago",
       "unread": 1,
@@ -58,7 +58,7 @@ class _ChatPageState extends State<ChatPage> with SingleTickerProviderStateMixin
     },
     {
       "name": "Arjun",
-      "image": "assets/images/profile2.png",
+      "image": "assets/images/profile2.jpg",
       "lastMessage": "Thanks for the travel recommendations!",
       "time": "2 hours ago",
       "unread": 0,
@@ -67,7 +67,7 @@ class _ChatPageState extends State<ChatPage> with SingleTickerProviderStateMixin
     },
     {
       "name": "Rahul",
-      "image": "assets/images/profile4.png",
+      "image": "assets/images/profile4.jpg",
       "lastMessage": "See you at the meetup tomorrow",
       "time": "Yesterday",
       "unread": 0,
@@ -80,21 +80,21 @@ class _ChatPageState extends State<ChatPage> with SingleTickerProviderStateMixin
     {
       "name": "Travel Enthusiasts",
       "members": 320,
-      "image": "assets/images/profile1.png",
+      "image": "assets/images/profile1.jpg",
       "lastMessage": "Anyone planning a trip to Goa?",
       "isActive": true,
     },
     {
       "name": "Book Club",
       "members": 180,
-      "image": "assets/images/profile3.png",
+      "image": "assets/images/profile3.jpg",
       "lastMessage": "This week's book is 'Atomic Habits'",
       "isActive": false,
     },
     {
       "name": "Foodies Corner",
       "members": 450,
-      "image": "assets/images/profile5.png",
+      "image": "assets/images/profile5.jpg",
       "lastMessage": "New restaurant opened in Indiranagar!",
       "isActive": true,
     },
