@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:bright_weddings/View/Discover/discover_page.dart';
-import 'package:bright_weddings/View/Profile/ProfileDetails/profile_details.dart';
-import 'package:bright_weddings/View/Matches/matches_page.dart';
-import 'package:bright_weddings/View/Dashboard/dashboard_mob.dart';
 import 'package:bright_weddings/Component/Navigation/bottom_nav_bar.dart';
+import 'package:bright_weddings/View/Dashboard/chat_detail_screen.dart';
 
 class Chat extends StatelessWidget {
   const Chat({super.key});
-  
+
   @override
   Widget build(BuildContext context) {
     return const ChatPage();
@@ -18,18 +15,20 @@ class Chat extends StatelessWidget {
 
 class ChatPage extends StatefulWidget {
   const ChatPage({super.key});
-  
+
   @override
   _ChatPageState createState() => _ChatPageState();
 }
 
-class _ChatPageState extends State<ChatPage> with SingleTickerProviderStateMixin {
+class _ChatPageState extends State<ChatPage>
+    with SingleTickerProviderStateMixin {
   late TabController _tabController;
   final TextEditingController _searchController = TextEditingController();
   bool _isSearching = false;
 
   final List<Map<String, dynamic>> conversations = [
     {
+      "id": "user_nandana_001",
       "name": "Nandana",
       "image": "assets/images/profile1.jpg",
       "lastMessage": "That sounds wonderful! Let's plan for the weekend 😊",
@@ -39,15 +38,17 @@ class _ChatPageState extends State<ChatPage> with SingleTickerProviderStateMixin
       "isTyping": false,
     },
     {
+      "id": "user_priya_002",
       "name": "Priya",
       "image": "assets/images/profile3.jpg",
       "lastMessage": "I love that book too! Have you read the sequel?",
       "time": "5 mins ago",
       "unread": 0,
       "isOnline": true,
-      "isTyping": true,
+      "isTyping": false,
     },
     {
+      "id": "user_sneha_003",
       "name": "Sneha",
       "image": "assets/images/profile5.jpg",
       "lastMessage": "The art exhibition was amazing!",
@@ -57,6 +58,7 @@ class _ChatPageState extends State<ChatPage> with SingleTickerProviderStateMixin
       "isTyping": false,
     },
     {
+      "id": "user_arjun_004",
       "name": "Arjun",
       "image": "assets/images/profile2.jpg",
       "lastMessage": "Thanks for the travel recommendations!",
@@ -66,6 +68,7 @@ class _ChatPageState extends State<ChatPage> with SingleTickerProviderStateMixin
       "isTyping": false,
     },
     {
+      "id": "user_rahul_005",
       "name": "Rahul",
       "image": "assets/images/profile4.jpg",
       "lastMessage": "See you at the meetup tomorrow",
@@ -116,22 +119,16 @@ class _ChatPageState extends State<ChatPage> with SingleTickerProviderStateMixin
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    
+
     return Scaffold(
-      backgroundColor: isDark ? const Color(0xFF121212) : const Color(0xFFF8F9FA),
+      backgroundColor:
+          isDark ? const Color(0xFF121212) : const Color(0xFFF8F9FA),
       body: SafeArea(
         child: Column(
           children: [
-            // Custom App Bar
             _buildAppBar(isDark),
-            
-            // Search Bar
             _buildSearchBar(isDark),
-            
-            // Tab Bar
             _buildTabBar(isDark),
-            
-            // Content
             Expanded(
               child: TabBarView(
                 controller: _tabController,
@@ -160,7 +157,8 @@ class _ChatPageState extends State<ChatPage> with SingleTickerProviderStateMixin
               color: const Color(0xFFE91E63),
               borderRadius: BorderRadius.circular(12),
             ),
-            child: const Icon(Icons.chat_bubble, color: Colors.white, size: 24),
+            child:
+                const Icon(Icons.chat_bubble, color: Colors.white, size: 24),
           ),
           const SizedBox(width: 12),
           Column(
@@ -191,14 +189,16 @@ class _ChatPageState extends State<ChatPage> with SingleTickerProviderStateMixin
                 color: isDark ? Colors.grey[800] : Colors.grey[100],
                 borderRadius: BorderRadius.circular(12),
               ),
-              child: Icon(Icons.edit_square, color: isDark ? Colors.white70 : Colors.black54),
+              child: Icon(Icons.edit_square,
+                  color: isDark ? Colors.white70 : Colors.black54),
             ),
             onPressed: () {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: const Text("New message feature coming soon"),
                   behavior: SnackBarBehavior.floating,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12)),
                 ),
               );
             },
@@ -245,7 +245,8 @@ class _ChatPageState extends State<ChatPage> with SingleTickerProviderStateMixin
           ),
           if (_isSearching)
             IconButton(
-              icon: Icon(Icons.close, color: isDark ? Colors.grey[400] : Colors.grey),
+              icon: Icon(Icons.close,
+                  color: isDark ? Colors.grey[400] : Colors.grey),
               onPressed: () {
                 setState(() {
                   _searchController.clear();
@@ -275,7 +276,8 @@ class _ChatPageState extends State<ChatPage> with SingleTickerProviderStateMixin
         ),
         indicatorSize: TabBarIndicatorSize.tab,
         dividerColor: Colors.transparent,
-        labelStyle: GoogleFonts.lato(fontWeight: FontWeight.bold, fontSize: 13),
+        labelStyle:
+            GoogleFonts.lato(fontWeight: FontWeight.bold, fontSize: 13),
         unselectedLabelStyle: GoogleFonts.lato(fontSize: 13),
         tabs: [
           Tab(
@@ -304,22 +306,24 @@ class _ChatPageState extends State<ChatPage> with SingleTickerProviderStateMixin
   }
 
   Widget _buildConversationsList(bool isDark) {
-    // Filter conversations based on search query
-    final filteredConversations = _isSearching && _searchController.text.isNotEmpty
-        ? conversations.where((conv) {
-            final name = conv["name"]?.toString().toLowerCase() ?? "";
-            final message = conv["lastMessage"]?.toString().toLowerCase() ?? "";
-            final query = _searchController.text.toLowerCase();
-            return name.contains(query) || message.contains(query);
-          }).toList()
-        : conversations;
+    final filteredConversations =
+        _isSearching && _searchController.text.isNotEmpty
+            ? conversations.where((conv) {
+                final name = conv["name"]?.toString().toLowerCase() ?? "";
+                final message =
+                    conv["lastMessage"]?.toString().toLowerCase() ?? "";
+                final query = _searchController.text.toLowerCase();
+                return name.contains(query) || message.contains(query);
+              }).toList()
+            : conversations;
 
     if (filteredConversations.isEmpty) {
       return Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.search_off, size: 64, color: isDark ? Colors.grey[600] : Colors.grey[400]),
+            Icon(Icons.search_off,
+                size: 64, color: isDark ? Colors.grey[600] : Colors.grey[400]),
             const SizedBox(height: 16),
             Text(
               "No conversations found",
@@ -341,6 +345,7 @@ class _ChatPageState extends State<ChatPage> with SingleTickerProviderStateMixin
       },
     );
   }
+
 
   Widget _buildConversationCard(Map<String, dynamic> conversation, bool isDark) {
     return Container(
@@ -372,7 +377,6 @@ class _ChatPageState extends State<ChatPage> with SingleTickerProviderStateMixin
             padding: const EdgeInsets.all(12),
             child: Row(
               children: [
-                // Avatar with Online Status
                 Stack(
                   children: [
                     Container(
@@ -405,15 +409,17 @@ class _ChatPageState extends State<ChatPage> with SingleTickerProviderStateMixin
                           decoration: BoxDecoration(
                             color: const Color(0xFF4CAF50),
                             shape: BoxShape.circle,
-                            border: Border.all(color: isDark ? const Color(0xFF1E1E1E) : Colors.white, width: 2),
+                            border: Border.all(
+                                color: isDark
+                                    ? const Color(0xFF1E1E1E)
+                                    : Colors.white,
+                                width: 2),
                           ),
                         ),
                       ),
                   ],
                 ),
                 const SizedBox(width: 12),
-                
-                // Message Content
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -436,7 +442,9 @@ class _ChatPageState extends State<ChatPage> with SingleTickerProviderStateMixin
                               fontSize: 11,
                               color: conversation["unread"] > 0
                                   ? const Color(0xFFE91E63)
-                                  : (isDark ? Colors.grey[400] : Colors.grey[500]),
+                                  : (isDark
+                                      ? Colors.grey[400]
+                                      : Colors.grey[500]),
                             ),
                           ),
                         ],
@@ -464,7 +472,9 @@ class _ChatPageState extends State<ChatPage> with SingleTickerProviderStateMixin
                                     conversation["lastMessage"],
                                     style: GoogleFonts.lato(
                                       fontSize: 13,
-                                      color: isDark ? Colors.grey[400] : Colors.grey[600],
+                                      color: isDark
+                                          ? Colors.grey[400]
+                                          : Colors.grey[600],
                                       fontWeight: conversation["unread"] > 0
                                           ? FontWeight.w600
                                           : FontWeight.normal,
@@ -523,11 +533,11 @@ class _ChatPageState extends State<ChatPage> with SingleTickerProviderStateMixin
   }
 
   Widget _buildGroupsList(bool isDark) {
-    // Filter groups based on search query
     final filteredGroups = _isSearching && _searchController.text.isNotEmpty
         ? communityGroups.where((group) {
             final name = group["name"]?.toString().toLowerCase() ?? "";
-            final message = group["lastMessage"]?.toString().toLowerCase() ?? "";
+            final message =
+                group["lastMessage"]?.toString().toLowerCase() ?? "";
             final query = _searchController.text.toLowerCase();
             return name.contains(query) || message.contains(query);
           }).toList()
@@ -538,7 +548,8 @@ class _ChatPageState extends State<ChatPage> with SingleTickerProviderStateMixin
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.search_off, size: 64, color: isDark ? Colors.grey[600] : Colors.grey[400]),
+            Icon(Icons.search_off,
+                size: 64, color: isDark ? Colors.grey[600] : Colors.grey[400]),
             const SizedBox(height: 16),
             Text(
               "No groups found",
@@ -584,7 +595,8 @@ class _ChatPageState extends State<ChatPage> with SingleTickerProviderStateMixin
               SnackBar(
                 content: Text("Opening ${group["name"]} group..."),
                 behavior: SnackBarBehavior.floating,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12)),
               ),
             );
           },
@@ -592,7 +604,6 @@ class _ChatPageState extends State<ChatPage> with SingleTickerProviderStateMixin
             padding: const EdgeInsets.all(12),
             child: Row(
               children: [
-                // Group Avatar
                 Container(
                   width: 55,
                   height: 55,
@@ -600,11 +611,10 @@ class _ChatPageState extends State<ChatPage> with SingleTickerProviderStateMixin
                     color: const Color(0xFFE91E63),
                     borderRadius: BorderRadius.circular(14),
                   ),
-                  child: const Icon(Icons.groups, color: Colors.white, size: 30),
+                  child:
+                      const Icon(Icons.groups, color: Colors.white, size: 30),
                 ),
                 const SizedBox(width: 12),
-                
-                // Group Info
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -628,7 +638,8 @@ class _ChatPageState extends State<ChatPage> with SingleTickerProviderStateMixin
                                 vertical: 3,
                               ),
                               decoration: BoxDecoration(
-                                color: const Color(0xFF4CAF50).withOpacity(0.1),
+                                color:
+                                    const Color(0xFF4CAF50).withOpacity(0.1),
                                 borderRadius: BorderRadius.circular(6),
                               ),
                               child: Text(
@@ -655,13 +666,18 @@ class _ChatPageState extends State<ChatPage> with SingleTickerProviderStateMixin
                       const SizedBox(height: 4),
                       Row(
                         children: [
-                          Icon(Icons.people, size: 12, color: isDark ? Colors.grey[400] : Colors.grey),
+                          Icon(Icons.people,
+                              size: 12,
+                              color:
+                                  isDark ? Colors.grey[400] : Colors.grey),
                           const SizedBox(width: 4),
                           Text(
                             "${group["members"]}+ members",
                             style: GoogleFonts.lato(
                               fontSize: 11,
-                              color: isDark ? Colors.grey[400] : Colors.grey[500],
+                              color: isDark
+                                  ? Colors.grey[400]
+                                  : Colors.grey[500],
                             ),
                           ),
                         ],
@@ -669,354 +685,11 @@ class _ChatPageState extends State<ChatPage> with SingleTickerProviderStateMixin
                     ],
                   ),
                 ),
-                Icon(Icons.chevron_right, color: isDark ? Colors.grey[400] : Colors.grey),
+                Icon(Icons.chevron_right,
+                    color: isDark ? Colors.grey[400] : Colors.grey),
               ],
             ),
           ),
-        ),
-      ),
-    );
-  }
-}
-
-// Chat Detail Screen
-class ChatDetailScreen extends StatefulWidget {
-  final Map<String, dynamic> conversation;
-
-  const ChatDetailScreen({Key? key, required this.conversation}) : super(key: key);
-
-  @override
-  State<ChatDetailScreen> createState() => _ChatDetailScreenState();
-}
-
-class _ChatDetailScreenState extends State<ChatDetailScreen> {
-  final TextEditingController _messageController = TextEditingController();
-  final ScrollController _scrollController = ScrollController();
-
-  final List<Map<String, dynamic>> messages = [
-    {
-      "isMe": false,
-      "text": "Hi! I saw your profile and loved your travel photos 📸",
-      "time": "09:30 AM",
-    },
-    {
-      "isMe": true,
-      "text": "Thank you! I'm really passionate about travel and photography",
-      "time": "09:32 AM",
-    },
-    {
-      "isMe": false,
-      "text": "That's wonderful! What's your favorite destination so far?",
-      "time": "09:35 AM",
-    },
-    {
-      "isMe": true,
-      "text": "I'd say Switzerland! The mountains and lakes are breathtaking 🏔️",
-      "time": "09:37 AM",
-    },
-    {
-      "isMe": false,
-      "text": "Oh I've always wanted to visit there! It's on my bucket list",
-      "time": "09:40 AM",
-    },
-    {
-      "isMe": true,
-      "text": "You should definitely go! Maybe we can share travel tips sometime",
-      "time": "09:42 AM",
-    },
-    {
-      "isMe": false,
-      "text": "That sounds wonderful! Let's plan for the weekend 😊",
-      "time": "09:45 AM",
-    },
-  ];
-
-  @override
-  void dispose() {
-    _messageController.dispose();
-    _scrollController.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xFFF8F9FA),
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios, color: Colors.black87),
-          onPressed: () => Navigator.pop(context),
-        ),
-        title: Row(
-          children: [
-            Stack(
-              children: [
-                CircleAvatar(
-                  radius: 20,
-                  backgroundImage: AssetImage(widget.conversation["image"]),
-                ),
-                if (widget.conversation["isOnline"])
-                  Positioned(
-                    right: 0,
-                    bottom: 0,
-                    child: Container(
-                      width: 12,
-                      height: 12,
-                      decoration: BoxDecoration(
-                        color: const Color(0xFF4CAF50),
-                        shape: BoxShape.circle,
-                        border: Border.all(color: Colors.white, width: 2),
-                      ),
-                    ),
-                  ),
-              ],
-            ),
-            const SizedBox(width: 12),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  widget.conversation["name"],
-                  style: GoogleFonts.poppins(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black87,
-                  ),
-                ),
-                Text(
-                  widget.conversation["isOnline"] ? "Online" : "Last seen recently",
-                  style: GoogleFonts.lato(
-                    fontSize: 12,
-                    color: widget.conversation["isOnline"] 
-                        ? const Color(0xFF4CAF50) 
-                        : Colors.grey,
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.videocam_outlined, color: Colors.black54),
-            onPressed: () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: const Text("Video call feature coming soon"),
-                  behavior: SnackBarBehavior.floating,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                ),
-              );
-            },
-          ),
-          IconButton(
-            icon: const Icon(Icons.call_outlined, color: Colors.black54),
-            onPressed: () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: const Text("Voice call feature coming soon"),
-                  behavior: SnackBarBehavior.floating,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                ),
-              );
-            },
-          ),
-          IconButton(
-            icon: const Icon(Icons.more_vert, color: Colors.black54),
-            onPressed: () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: const Text("More options coming soon"),
-                  behavior: SnackBarBehavior.floating,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                ),
-              );
-            },
-          ),
-        ],
-      ),
-      body: Column(
-        children: [
-          // Messages List
-          Expanded(
-            child: ListView.builder(
-              controller: _scrollController,
-              padding: const EdgeInsets.all(16),
-              itemCount: messages.length,
-              itemBuilder: (context, index) {
-                return _buildMessageBubble(messages[index], index);
-              },
-            ),
-          ),
-          
-          // Message Input
-          _buildMessageInput(),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildMessageBubble(Map<String, dynamic> message, int index) {
-    final isMe = message["isMe"];
-    final showTime = index == 0 || 
-        messages[index - 1]["time"] != message["time"];
-
-    return Column(
-      crossAxisAlignment: isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
-      children: [
-        if (showTime)
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8),
-            child: Center(
-              child: Text(
-                message["time"],
-                style: GoogleFonts.lato(
-                  fontSize: 12,
-                  color: Colors.grey[500],
-                ),
-              ),
-            ),
-          ),
-        Container(
-          margin: EdgeInsets.only(
-            bottom: 8,
-            left: isMe ? 60 : 0,
-            right: isMe ? 0 : 60,
-          ),
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-          decoration: BoxDecoration(
-            gradient: isMe
-                ? const LinearGradient(
-                    colors: [Color(0xFFE91E63), Color(0xFFFF5722)],
-                  )
-                : null,
-            color: isMe ? null : Colors.white,
-            borderRadius: BorderRadius.only(
-              topLeft: const Radius.circular(20),
-              topRight: const Radius.circular(20),
-              bottomLeft: Radius.circular(isMe ? 20 : 4),
-              bottomRight: Radius.circular(isMe ? 4 : 20),
-            ),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.05),
-                blurRadius: 5,
-                offset: const Offset(0, 2),
-              ),
-            ],
-          ),
-          child: Text(
-            message["text"],
-            style: GoogleFonts.lato(
-              fontSize: 15,
-              color: isMe ? Colors.white : Colors.black87,
-              height: 1.4,
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildMessageInput() {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 10,
-            offset: const Offset(0, -5),
-          ),
-        ],
-      ),
-      child: SafeArea(
-        child: Row(
-          children: [
-            Container(
-              padding: const EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                color: Colors.grey[100],
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: const Icon(Icons.add, color: Color(0xFFE91E63)),
-            ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                decoration: BoxDecoration(
-                  color: Colors.grey[100],
-                  borderRadius: BorderRadius.circular(25),
-                ),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: TextField(
-                        controller: _messageController,
-                        decoration: InputDecoration(
-                          hintText: "Type a message...",
-                          hintStyle: GoogleFonts.lato(color: Colors.grey),
-                          border: InputBorder.none,
-                        ),
-                      ),
-                    ),
-                    IconButton(
-                      icon: const Icon(Icons.emoji_emotions_outlined, color: Colors.grey),
-                      onPressed: () {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: const Text("Emoji picker coming soon"),
-                            behavior: SnackBarBehavior.floating,
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                          ),
-                        );
-                      },
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            const SizedBox(width: 12),
-            GestureDetector(
-              onTap: () {
-                final text = _messageController.text.trim();
-                if (text.isNotEmpty) {
-                  setState(() {
-                    messages.add({
-                      "isMe": true,
-                      "text": text,
-                      "time": "Just now",
-                    });
-                    _messageController.clear();
-                  });
-                  // Scroll to bottom after sending
-                  Future.delayed(const Duration(milliseconds: 100), () {
-                    if (_scrollController.hasClients) {
-                      _scrollController.animateTo(
-                        _scrollController.position.maxScrollExtent,
-                        duration: const Duration(milliseconds: 300),
-                        curve: Curves.easeOut,
-                      );
-                    }
-                  });
-                }
-              },
-              child: Container(
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  gradient: const LinearGradient(
-                    colors: [Color(0xFFE91E63), Color(0xFFFF5722)],
-                  ),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: const Icon(Icons.send, color: Colors.white, size: 22),
-              ),
-            ),
-          ],
         ),
       ),
     );

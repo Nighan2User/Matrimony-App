@@ -28,6 +28,7 @@ import 'Controller/profile_controller.dart';
 import 'Controller/firebase_auth_controller.dart';
 import 'Controller/animation_controller.dart' as custom;
 import 'theme/theme_controller.dart';
+import 'services/socket_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -68,6 +69,7 @@ void main() async {
     Get.put(FirebaseAuthController()); // Add Firebase auth controller
     Get.put(custom.AnimationController());
     Get.put(ThemeController());
+    Get.put(SocketService()); // Add Socket.IO service for real-time chat
     print("Controllers initialized successfully");
   } catch (e) {
     print("Controller initialization error: $e");
