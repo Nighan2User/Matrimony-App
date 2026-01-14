@@ -2,6 +2,9 @@ import 'package:bright_weddings/Component/Dashboard/circular_bullet.dart';
 import 'package:bright_weddings/Helper/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:get/get.dart';
+import 'package:bright_weddings/View/Discover/discover_page.dart';
+import 'package:bright_weddings/View/Matches/matches_page.dart';
 
 import '../../../Helper/colors.dart';
 import '../../../Mock API/user_list.dart';
@@ -130,7 +133,7 @@ class ProfileListTab extends StatelessWidget {
                     Row(
                       children: [
                         InkWell(
-                          onTap: () {},
+                          onTap: () => Get.to(() => DiscoverPage()),
                           child: Container(
                             height: 3.h,
                             width: 15.w,
@@ -151,7 +154,7 @@ class ProfileListTab extends StatelessWidget {
                         ),
                         SizedBox(width: 20.0.w),
                         InkWell(
-                          onTap: () {},
+                          onTap: () => Get.to(() => MatchesPage()),
                           child: Container(
                             height: 3.5.h,
                             width: 15.w,

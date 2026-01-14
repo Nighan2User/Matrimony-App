@@ -114,7 +114,12 @@ class NewClientRegistrationWeb extends StatelessWidget {
                       const SizedBox(height: 24),
                       ElevatedButton(
                         onPressed: () {
-                          // Submit or switch form
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text("Creating account..."),
+                              behavior: SnackBarBehavior.floating,
+                            ),
+                          );
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color.fromARGB(255, 233, 117, 40),
@@ -126,7 +131,14 @@ class NewClientRegistrationWeb extends StatelessWidget {
                       const Divider(),
                       const SizedBox(height: 12),
                       ElevatedButton.icon(
-                        onPressed: () {},
+                        onPressed: () {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text("Google sign-up coming soon"),
+                              behavior: SnackBarBehavior.floating,
+                            ),
+                          );
+                        },
                         icon: const Icon(Icons.g_mobiledata),
                         label: const Text("Sign up with Google"),
                         style: ElevatedButton.styleFrom(
@@ -137,7 +149,14 @@ class NewClientRegistrationWeb extends StatelessWidget {
                       ),
                       const SizedBox(height: 12),
                       ElevatedButton.icon(
-                        onPressed: () {},
+                        onPressed: () {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text("Apple sign-up coming soon"),
+                              behavior: SnackBarBehavior.floating,
+                            ),
+                          );
+                        },
                         icon: const Icon(Icons.apple),
                         label: const Text("Sign up with Apple"),
                         style: ElevatedButton.styleFrom(

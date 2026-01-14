@@ -116,7 +116,7 @@ class _DashboardMobState extends State<DashboardMob> {
             // New Profiles Section
             SliverToBoxAdapter(
               child: _buildSectionHeader("New Profiles",
-                  onViewAll: () {}, isDark: isDark),
+                  onViewAll: () => Get.to(() => DiscoverPage()), isDark: isDark),
             ),
 
             SliverToBoxAdapter(
@@ -126,7 +126,7 @@ class _DashboardMobState extends State<DashboardMob> {
             // Recommendations Section
             SliverToBoxAdapter(
               child: _buildSectionHeader("Recommended for You",
-                  onViewAll: () {}, isDark: isDark),
+                  onViewAll: () => Get.to(() => DiscoverPage()), isDark: isDark),
             ),
 
             SliverList(
@@ -229,44 +229,49 @@ class _DashboardMobState extends State<DashboardMob> {
   }
 
   Widget _buildSearchBar(bool isDark) {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 16),
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-      decoration: BoxDecoration(
-        color: isDark ? const Color(0xFF1E1E1E) : Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(isDark ? 0.2 : 0.05),
-            blurRadius: 10,
-            offset: const Offset(0, 5),
-          ),
-        ],
-      ),
-      child: Row(
-        children: [
-          Icon(Icons.search, color: isDark ? Colors.grey[400] : otherTextColor),
-          const SizedBox(width: 12),
-          Expanded(
-            child: TextField(
-              decoration: InputDecoration(
-                hintText: "Search for your partner...",
-                hintStyle: GoogleFonts.lato(
-                    color: isDark ? Colors.grey[400] : otherTextColor),
-                border: InputBorder.none,
+    return GestureDetector(
+      onTap: () => Get.to(() => DiscoverPage()),
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 16),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+        decoration: BoxDecoration(
+          color: isDark ? const Color(0xFF1E1E1E) : Colors.white,
+          borderRadius: BorderRadius.circular(16),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(isDark ? 0.2 : 0.05),
+              blurRadius: 10,
+              offset: const Offset(0, 5),
+            ),
+          ],
+        ),
+        child: Row(
+          children: [
+            Icon(Icons.search, color: isDark ? Colors.grey[400] : otherTextColor),
+            const SizedBox(width: 12),
+            Expanded(
+              child: AbsorbPointer(
+                child: TextField(
+                  decoration: InputDecoration(
+                    hintText: "Search for your partner...",
+                    hintStyle: GoogleFonts.lato(
+                        color: isDark ? Colors.grey[400] : otherTextColor),
+                    border: InputBorder.none,
+                  ),
+                  style: TextStyle(color: isDark ? Colors.white : textColor),
+                ),
               ),
-              style: TextStyle(color: isDark ? Colors.white : textColor),
             ),
-          ),
-          Container(
-            padding: const EdgeInsets.all(8),
-            decoration: BoxDecoration(
-              color: dashboardSelectedColor,
-              borderRadius: BorderRadius.circular(10),
+            Container(
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: dashboardSelectedColor,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: const Icon(Icons.tune, color: Colors.white, size: 18),
             ),
-            child: const Icon(Icons.tune, color: Colors.white, size: 18),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

@@ -7,19 +7,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Bright Weddings - Find your perfect match">
   
-  <!-- Preconnect to critical origins -->
+  <!-- Critical resource hints for fastest loading -->
   <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://firebasestorage.googleapis.com" crossorigin>
+  <link rel="preconnect" href="https://unpkg.com" crossorigin>
   
-  <!-- DNS prefetch for Firebase -->
+  <!-- DNS prefetch for Firebase and CDN -->
   <link rel="dns-prefetch" href="https://firestore.googleapis.com">
   <link rel="dns-prefetch" href="https://identitytoolkit.googleapis.com">
+  <link rel="dns-prefetch" href="https://www.gstatic.com">
+  
+  <!-- Preload critical assets -->
+  <link rel="preload" href="flutter_bootstrap.js" as="script" crossorigin>
+  <link rel="preload" href="main.dart.js" as="script" crossorigin>
   
   <!-- iOS meta tags & icons -->
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Bright Weddings">
   <link rel="apple-touch-icon" href="icons/Icon-192.png">
 
@@ -34,6 +40,7 @@
     :root {
       --primary-color: #E91E63;
       --bg-color: #FFF8F9;
+      --shadow-color: rgba(233, 30, 99, 0.1);
     }
     
     * {
@@ -47,6 +54,7 @@
       width: 100%;
       overflow: hidden;
       background-color: var(--bg-color);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     }
     
     .loading-container {
@@ -61,7 +69,7 @@
       align-items: center;
       background: linear-gradient(135deg, var(--bg-color) 0%, #FCE4EC 100%);
       z-index: 9999;
-      transition: opacity 0.3s ease-out;
+      transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     }
     
     .loading-container.fade-out {
@@ -70,103 +78,196 @@
     }
     
     .loading-logo {
-      width: 120px;
-      height: 120px;
-      margin-bottom: 24px;
-      animation: pulse 1.5s ease-in-out infinite;
+      width: 100px;
+      height: 100px;
+      margin-bottom: 20px;
+      animation: logoFloat 2s ease-in-out infinite;
+      filter: drop-shadow(0 4px 8px var(--shadow-color));
     }
     
     .loading-text {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      font-size: 24px;
+      font-size: 22px;
       font-weight: 600;
       color: var(--primary-color);
-      margin-bottom: 32px;
+      margin-bottom: 28px;
+      letter-spacing: -0.5px;
     }
     
     .loading-spinner {
-      width: 48px;
-      height: 48px;
-      border: 4px solid #FCE4EC;
+      width: 40px;
+      height: 40px;
+      border: 3px solid #FCE4EC;
       border-top-color: var(--primary-color);
       border-radius: 50%;
-      animation: spin 1s linear infinite;
+      animation: spin 0.8s linear infinite;
     }
     
     .loading-progress {
-      margin-top: 16px;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      font-size: 14px;
-      color: #888;
+      margin-top: 12px;
+      font-size: 13px;
+      color: #666;
+      opacity: 0.8;
+    }
+    
+    .loading-bar {
+      width: 200px;
+      height: 3px;
+      background: #FCE4EC;
+      border-radius: 2px;
+      margin: 16px 0 8px;
+      overflow: hidden;
+    }
+    
+    .loading-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary-color), #F06292);
+      border-radius: 2px;
+      width: 0%;
+      animation: loadingProgress 3s ease-out infinite;
     }
     
     @keyframes spin {
       to { transform: rotate(360deg); }
     }
     
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); opacity: 1; }
-      50% { transform: scale(1.05); opacity: 0.8; }
+    @keyframes logoFloat {
+      0%, 100% { transform: translateY(0px) scale(1); }
+      50% { transform: translateY(-8px) scale(1.02); }
+    }
+    
+    @keyframes loadingProgress {
+      0% { width: 0%; }
+      50% { width: 70%; }
+      100% { width: 100%; }
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 480px) {
+      .loading-logo { width: 80px; height: 80px; }
+      .loading-text { font-size: 20px; }
+      .loading-bar { width: 160px; }
     }
   </style>
 </head>
 <body>
-  <!-- Loading screen shown while Flutter initializes -->
+  <!-- Optimized loading screen -->
   <div id="loading" class="loading-container">
     <svg class="loading-logo" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
       <circle cx="50" cy="50" r="45" fill="#FCE4EC"/>
       <path d="M50 25C38.954 25 30 33.954 30 45C30 60 50 75 50 75C50 75 70 60 70 45C70 33.954 61.046 25 50 25ZM50 52C46.134 52 43 48.866 43 45C43 41.134 46.134 38 50 38C53.866 38 57 41.134 57 45C57 48.866 53.866 52 50 52Z" fill="#E91E63"/>
     </svg>
     <div class="loading-text">Bright Weddings</div>
+    <div class="loading-bar">
+      <div class="loading-bar-fill"></div>
+    </div>
     <div class="loading-spinner"></div>
-    <div id="loading-progress" class="loading-progress">Loading...</div>
+    <div id="loading-progress" class="loading-progress">Initializing...</div>
   </div>
 
   <script>
-    // Performance: Track loading time
+    // Performance tracking
     window._loadStart = performance.now();
+    window._loadSteps = [];
     
-    // Update loading progress
+    function trackStep(step) {
+      window._loadSteps.push({step, time: performance.now() - window._loadStart});
+    }
+    
+    // Optimized progress updates
+    const progressSteps = [
+      'Loading resources...',
+      'Initializing Flutter...',
+      'Preparing UI...',
+      'Almost ready...'
+    ];
+    let currentStep = 0;
+    
     function updateProgress(msg) {
       const el = document.getElementById('loading-progress');
-      if (el) el.textContent = msg;
+      if (el) el.textContent = msg || progressSteps[currentStep++ % progressSteps.length];
     }
+    
+    // Auto-progress simulation for perceived performance
+    let progressInterval = setInterval(() => {
+      if (currentStep < progressSteps.length) {
+        updateProgress();
+      }
+    }, 800);
     
     // Hide loading screen when Flutter is ready
     window.addEventListener('flutter-first-frame', function() {
+      clearInterval(progressInterval);
+      trackStep('flutter-ready');
+      
       const loading = document.getElementById('loading');
       if (loading) {
         loading.classList.add('fade-out');
-        setTimeout(() => loading.remove(), 300);
+        setTimeout(() => {
+          loading.remove();
+          // Log performance metrics
+          const totalTime = Math.round(performance.now() - window._loadStart);
+          console.log(`🚀 Flutter loaded in ${totalTime}ms`);
+          console.log('📊 Load steps:', window._loadSteps);
+        }, 400);
       }
-      console.log('Flutter loaded in', Math.round(performance.now() - window._loadStart), 'ms');
+    });
+    
+    // Error handling
+    window.addEventListener('error', function(e) {
+      console.error('Loading error:', e);
+      updateProgress('Loading error - please refresh');
     });
   </script>
 
   <script>
-    // Flutter initialization with optimized settings
+    // Optimized Flutter initialization
     window.addEventListener('load', function() {
-      updateProgress('Initializing...');
+      trackStep('dom-loaded');
+      updateProgress('Loading Flutter...');
       
-      // Load Flutter bootstrap
-      var script = document.createElement('script');
-      script.src = 'flutter_bootstrap.js';
-      script.async = true;
-      script.onload = function() {
-        updateProgress('Starting app...');
-      };
-      document.body.appendChild(script);
+      // Preload critical resources
+      const preloadScript = document.createElement('link');
+      preloadScript.rel = 'preload';
+      preloadScript.as = 'script';
+      preloadScript.href = 'flutter_bootstrap.js';
+      document.head.appendChild(preloadScript);
+      
+      // Load Flutter bootstrap with minimal delay
+      setTimeout(() => {
+        const script = document.createElement('script');
+        script.src = 'flutter_bootstrap.js';
+        script.async = true;
+        script.onload = function() {
+          trackStep('bootstrap-loaded');
+          updateProgress('Starting app...');
+        };
+        script.onerror = function() {
+          updateProgress('Failed to load - please refresh');
+        };
+        document.body.appendChild(script);
+      }, 50);
     });
   </script>
 
-  <!-- Fallback for very slow connections -->
+  <!-- Fallback for JavaScript disabled -->
   <noscript>
     <style>
       .loading-container { display: none !important; }
+      .noscript-message {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        text-align: center;
+        padding: 20px;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      }
     </style>
-    <p style="text-align: center; padding: 20px;">
-      This application requires JavaScript to run. Please enable JavaScript in your browser.
-    </p>
+    <div class="noscript-message">
+      <h1 style="color: #E91E63; margin-bottom: 16px;">Bright Weddings</h1>
+      <p style="color: #666;">This application requires JavaScript to run.<br>Please enable JavaScript in your browser and refresh the page.</p>
+    </div>
   </noscript>
 </body>
 </html>

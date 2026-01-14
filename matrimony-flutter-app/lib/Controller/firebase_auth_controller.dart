@@ -23,7 +23,7 @@ class FirebaseAuthController extends GetxController {
         
         // Get token
         user.getIdToken().then((token) {
-          userToken.value = token;
+          userToken.value = token ?? '';
         });
       } else {
         logout();

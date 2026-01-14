@@ -207,7 +207,7 @@ class _LoginWebState extends State<LoginWeb> {
                     // Register Link
                     TextButton(
                       onPressed: () {
-                        Navigator.pushNamed(context, '/register');
+                        Navigator.pushNamed(context, '/login');
                       },
                       child: Text(
                         "Don't have an account? Register here",

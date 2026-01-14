@@ -5,6 +5,7 @@ import 'package:bright_weddings/View/Matches/matches_page.dart';
 import 'package:bright_weddings/View/Login/home.dart';
 import 'package:bright_weddings/Component/Navigation/bottom_nav_bar.dart';
 import 'package:bright_weddings/theme/theme_controller.dart';
+import 'package:bright_weddings/Controller/firebase_auth_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -607,7 +608,15 @@ class _ProfileDetailsState extends State<ProfileDetails> {
             icon: Icons.help_outline,
             title: "Help & Support",
             subtitle: "Get help and contact us",
-            onTap: () {},
+            onTap: () {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: const Text("Contact us at support@brightweddings.com"),
+                  behavior: SnackBarBehavior.floating,
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                ),
+              );
+            },
             isDark: isDark,
           ),
           _buildMenuDivider(isDark),
@@ -615,7 +624,32 @@ class _ProfileDetailsState extends State<ProfileDetails> {
             icon: Icons.info_outline,
             title: "About",
             subtitle: "App version and info",
-            onTap: () {},
+            onTap: () {
+              showDialog(
+                context: context,
+                builder: (context) => AlertDialog(
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                  title: const Text("About Bright Weddings"),
+                  content: const Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text("Version: 1.0.0"),
+                      SizedBox(height: 8),
+                      Text("© 2025 Bright Weddings"),
+                      SizedBox(height: 8),
+                      Text("Find your perfect match"),
+                    ],
+                  ),
+                  actions: [
+                    TextButton(
+                      onPressed: () => Navigator.pop(context),
+                      child: const Text("Close"),
+                    ),
+                  ],
+                ),
+              );
+            },
             isDark: isDark,
           ),
         ],
@@ -1087,7 +1121,52 @@ class _ProfileDetailsState extends State<ProfileDetails> {
         ),
       ),
       trailing: const Icon(Icons.chevron_right, color: Colors.grey),
-      onTap: () {},
+      onTap: () {
+        if (isDestructive) {
+          showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+              title: Text(title, style: GoogleFonts.poppins(fontWeight: FontWeight.bold)),
+              content: Text(
+                "Are you sure you want to $title? This action cannot be undone.",
+                style: GoogleFonts.lato(),
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: Text("Cancel", style: GoogleFonts.lato(color: Colors.grey)),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text("$title feature coming soon"),
+                        behavior: SnackBarBehavior.floating,
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                      ),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.red,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                  ),
+                  child: Text("Confirm", style: GoogleFonts.lato(color: Colors.white)),
+                ),
+              ],
+            ),
+          );
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text("$title feature coming soon"),
+              behavior: SnackBarBehavior.floating,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+            ),
+          );
+        }
+      },
     );
   }
 
@@ -1110,10 +1189,14 @@ class _ProfileDetailsState extends State<ProfileDetails> {
             ElevatedButton(
               onPressed: () {
                 Navigator.pop(context);
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => const LoginHome()),
-                );
+                // Properly logout from Firebase
+                try {
+                  final authController = Get.find<FirebaseAuthController>();
+                  authController.logout();
+                } catch (e) {
+                  // Controller might not be found, continue with navigation
+                }
+                Get.offAllNamed('/');
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.red,

@@ -193,7 +193,15 @@ class _ChatPageState extends State<ChatPage> with SingleTickerProviderStateMixin
               ),
               child: Icon(Icons.edit_square, color: isDark ? Colors.white70 : Colors.black54),
             ),
-            onPressed: () {},
+            onPressed: () {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: const Text("New message feature coming soon"),
+                  behavior: SnackBarBehavior.floating,
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                ),
+              );
+            },
           ),
         ],
       ),
@@ -296,11 +304,40 @@ class _ChatPageState extends State<ChatPage> with SingleTickerProviderStateMixin
   }
 
   Widget _buildConversationsList(bool isDark) {
+    // Filter conversations based on search query
+    final filteredConversations = _isSearching && _searchController.text.isNotEmpty
+        ? conversations.where((conv) {
+            final name = conv["name"]?.toString().toLowerCase() ?? "";
+            final message = conv["lastMessage"]?.toString().toLowerCase() ?? "";
+            final query = _searchController.text.toLowerCase();
+            return name.contains(query) || message.contains(query);
+          }).toList()
+        : conversations;
+
+    if (filteredConversations.isEmpty) {
+      return Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Icons.search_off, size: 64, color: isDark ? Colors.grey[600] : Colors.grey[400]),
+            const SizedBox(height: 16),
+            Text(
+              "No conversations found",
+              style: GoogleFonts.poppins(
+                fontSize: 16,
+                color: isDark ? Colors.grey[400] : Colors.grey[600],
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+
     return ListView.builder(
       padding: const EdgeInsets.all(16),
-      itemCount: conversations.length,
+      itemCount: filteredConversations.length,
       itemBuilder: (context, index) {
-        return _buildConversationCard(conversations[index], isDark);
+        return _buildConversationCard(filteredConversations[index], isDark);
       },
     );
   }
@@ -486,11 +523,40 @@ class _ChatPageState extends State<ChatPage> with SingleTickerProviderStateMixin
   }
 
   Widget _buildGroupsList(bool isDark) {
+    // Filter groups based on search query
+    final filteredGroups = _isSearching && _searchController.text.isNotEmpty
+        ? communityGroups.where((group) {
+            final name = group["name"]?.toString().toLowerCase() ?? "";
+            final message = group["lastMessage"]?.toString().toLowerCase() ?? "";
+            final query = _searchController.text.toLowerCase();
+            return name.contains(query) || message.contains(query);
+          }).toList()
+        : communityGroups;
+
+    if (filteredGroups.isEmpty) {
+      return Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Icons.search_off, size: 64, color: isDark ? Colors.grey[600] : Colors.grey[400]),
+            const SizedBox(height: 16),
+            Text(
+              "No groups found",
+              style: GoogleFonts.poppins(
+                fontSize: 16,
+                color: isDark ? Colors.grey[400] : Colors.grey[600],
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+
     return ListView.builder(
       padding: const EdgeInsets.all(16),
-      itemCount: communityGroups.length,
+      itemCount: filteredGroups.length,
       itemBuilder: (context, index) {
-        return _buildGroupCard(communityGroups[index], isDark);
+        return _buildGroupCard(filteredGroups[index], isDark);
       },
     );
   }
@@ -513,7 +579,15 @@ class _ChatPageState extends State<ChatPage> with SingleTickerProviderStateMixin
         color: Colors.transparent,
         child: InkWell(
           borderRadius: BorderRadius.circular(16),
-          onTap: () {},
+          onTap: () {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text("Opening ${group["name"]} group..."),
+                behavior: SnackBarBehavior.floating,
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+              ),
+            );
+          },
           child: Padding(
             padding: const EdgeInsets.all(12),
             child: Row(
@@ -727,15 +801,39 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
         actions: [
           IconButton(
             icon: const Icon(Icons.videocam_outlined, color: Colors.black54),
-            onPressed: () {},
+            onPressed: () {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: const Text("Video call feature coming soon"),
+                  behavior: SnackBarBehavior.floating,
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                ),
+              );
+            },
           ),
           IconButton(
             icon: const Icon(Icons.call_outlined, color: Colors.black54),
-            onPressed: () {},
+            onPressed: () {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: const Text("Voice call feature coming soon"),
+                  behavior: SnackBarBehavior.floating,
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                ),
+              );
+            },
           ),
           IconButton(
             icon: const Icon(Icons.more_vert, color: Colors.black54),
-            onPressed: () {},
+            onPressed: () {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: const Text("More options coming soon"),
+                  behavior: SnackBarBehavior.floating,
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                ),
+              );
+            },
           ),
         ],
       ),
@@ -868,22 +966,55 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
                     ),
                     IconButton(
                       icon: const Icon(Icons.emoji_emotions_outlined, color: Colors.grey),
-                      onPressed: () {},
+                      onPressed: () {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: const Text("Emoji picker coming soon"),
+                            behavior: SnackBarBehavior.floating,
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                          ),
+                        );
+                      },
                     ),
                   ],
                 ),
               ),
             ),
             const SizedBox(width: 12),
-            Container(
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                gradient: const LinearGradient(
-                  colors: [Color(0xFFE91E63), Color(0xFFFF5722)],
+            GestureDetector(
+              onTap: () {
+                final text = _messageController.text.trim();
+                if (text.isNotEmpty) {
+                  setState(() {
+                    messages.add({
+                      "isMe": true,
+                      "text": text,
+                      "time": "Just now",
+                    });
+                    _messageController.clear();
+                  });
+                  // Scroll to bottom after sending
+                  Future.delayed(const Duration(milliseconds: 100), () {
+                    if (_scrollController.hasClients) {
+                      _scrollController.animateTo(
+                        _scrollController.position.maxScrollExtent,
+                        duration: const Duration(milliseconds: 300),
+                        curve: Curves.easeOut,
+                      );
+                    }
+                  });
+                }
+              },
+              child: Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  gradient: const LinearGradient(
+                    colors: [Color(0xFFE91E63), Color(0xFFFF5722)],
+                  ),
+                  borderRadius: BorderRadius.circular(12),
                 ),
-                borderRadius: BorderRadius.circular(12),
+                child: const Icon(Icons.send, color: Colors.white, size: 22),
               ),
-              child: const Icon(Icons.send, color: Colors.white, size: 22),
             ),
           ],
         ),
