@@ -84,17 +84,22 @@ class _DiscoverPageState extends State<DiscoverPage> with SingleTickerProviderSt
 
   List<Map<String, dynamic>> get filteredProfiles {
     return profiles.where((profile) {
+      // If there's a search query, prioritize search over filter chips
+      if (searchQuery.isNotEmpty) {
+        final query = searchQuery.toLowerCase();
+        return (profile["name"]?.toString().toLowerCase() ?? "").contains(query) ||
+            (profile["location"]?.toString().toLowerCase() ?? "").contains(query) ||
+            (profile["occupation"]?.toString().toLowerCase() ?? "").contains(query) ||
+            (profile["bio"]?.toString().toLowerCase() ?? "").contains(query);
+      }
+      
+      // No search query - apply filter chips only
       final matchesFilter = selectedFilter == "All" || 
           profile["category"] == selectedFilter ||
           (selectedFilter == "Nearby" && _nearbyCities.contains(profile["location"])) ||
           (selectedFilter == "New" && (profile["age"] as int? ?? 0) <= _newProfileMaxAge);
       
-      final matchesSearch = searchQuery.isEmpty ||
-          (profile["name"]?.toString().toLowerCase() ?? "").contains(searchQuery.toLowerCase()) ||
-          (profile["location"]?.toString().toLowerCase() ?? "").contains(searchQuery.toLowerCase()) ||
-          (profile["occupation"]?.toString().toLowerCase() ?? "").contains(searchQuery.toLowerCase());
-      
-      return matchesFilter && matchesSearch;
+      return matchesFilter;
     }).toList();
   }
 
@@ -241,6 +246,10 @@ class _DiscoverPageState extends State<DiscoverPage> with SingleTickerProviderSt
                     setState(() {
                       searchQuery = value;
                       currentIndex = 0;
+                      // Reset filter to "All" when searching for better UX
+                      if (value.isNotEmpty) {
+                        selectedFilter = "All";
+                      }
                     });
                   },
                   style: GoogleFonts.lato(
